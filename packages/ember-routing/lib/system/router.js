@@ -24,6 +24,7 @@ import { guidFor } from 'ember-metal/utils';
 import RouterState from './router_state';
 import { getOwner } from 'container/owner';
 import dictionary from 'ember-metal/dictionary';
+import { isArray } from 'ember-runtime/utils';
 
 /**
 @module ember
@@ -987,6 +988,9 @@ function calculatePostTransitionState(emberRouter, leafRouteName, contexts) {
 
 function updatePaths(router) {
   let infos = router.router.currentHandlerInfos;
+
+  if (!isArray(infos) || infos.length === 0) { return; }
+
   let path = EmberRouter._routePath(infos);
   let currentRouteName = infos[infos.length - 1].name;
 
